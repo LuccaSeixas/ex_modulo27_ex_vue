@@ -29,16 +29,16 @@ import { reactive } from 'vue';
 
     switch (estado.filtro) {
       case '+':
-        estado.resultado = getSoma().toString();
+        estado.resultado = getSoma();
         break;
       case '-':
-        estado.resultado = getSubtracao().toString();
+        estado.resultado = getSubtracao();
         break;
       case '/':
-        estado.resultado = getDivisao().toString();
+        estado.resultado = getDivisao();
         break;
       case 'x':
-        estado.resultado = getMultiplicacao().toString();
+        estado.resultado = getMultiplicacao();
         break;
       default:
         estado.resultado = "";
@@ -52,7 +52,7 @@ import { reactive } from 'vue';
     <form>
       <div class="row mt-5">
         <div class="col-3">
-          <input v-model="estado.input1" @input="mostraResultado" type="text" class="form-control" inputmode="numeric" placeholder="Adicionar Número">
+          <input v-model="estado.input1" @input="mostraResultado" type="number" class="form-control no-spinner" placeholder="Adicionar Número">
         </div>
         <div class="col">
           <select v-model="estado.filtro" @change="mostraResultado" class="text-center form-control">
@@ -63,7 +63,7 @@ import { reactive } from 'vue';
           </select>
         </div>
         <div class="col-3">
-          <input v-model="estado.input2" @input="mostraResultado" type="text" class="form-control" inputmode="numeric" placeholder="Adicionar Número">
+          <input v-model="estado.input2" @input="mostraResultado" type="number" class="form-control no-spinner" placeholder="Adicionar Número">
         </div>
         <div class="col text-center p-0 align-self-center">
           <span>=</span>
@@ -78,11 +78,12 @@ import { reactive } from 'vue';
 </template>
 
 <style scoped>
-.input-number::-webkit-inner-spin-button {
+  .no-spinner::-webkit-outer-spin-button,
+  .no-spinner::-webkit-inner-spin-button {
     -webkit-appearance: none;
-}
-
-.input-number {
+    margin: 0;
+  }
+  .no-spinner {
     -moz-appearance: textfield;
-}
+  }
 </style>
