@@ -1,47 +1,88 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { reactive } from 'vue';
+
+  const estado = reactive({
+    filtro: "+",
+    input1: "",
+    input2: "",
+    resultado: ""
+  })
+
+  const getSoma = () => {
+    return estado.input1 + estado.input2;
+  };
+
+  const getSubtracao = () => {
+    return estado.input1 - estado.input2;
+  }
+
+  const getDivisao = () => {
+    return estado.input1 / estado.input2;
+
+  }
+
+  const getMultiplicacao = () => {
+    return estado.input1 * estado.input2;
+  }
+
+  const mostraResultado = () => {
+
+    switch (estado.filtro) {
+      case '+':
+        estado.resultado = getSoma().toString();
+        break;
+      case '-':
+        estado.resultado = getSubtracao().toString();
+        break;
+      case '/':
+        estado.resultado = getDivisao().toString();
+        break;
+      case 'x':
+        estado.resultado = getMultiplicacao().toString();
+        break;
+      default:
+        estado.resultado = "";
+    }
+  };
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <div class="container">
+    <form>
+      <div class="row mt-5">
+        <div class="col-3">
+          <input v-model="estado.input1" @input="mostraResultado" type="text" class="form-control" inputmode="numeric" placeholder="Adicionar Número">
+        </div>
+        <div class="col">
+          <select v-model="estado.filtro" @change="mostraResultado" class="text-center form-control">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="/">/</option>
+            <option value="x">X</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <input v-model="estado.input2" @input="mostraResultado" type="text" class="form-control" inputmode="numeric" placeholder="Adicionar Número">
+        </div>
+        <div class="col text-center p-0 align-self-center">
+          <span>=</span>
+        </div>
+        <div class="col-4">
+          <input v-model="estado.resultado" type="number" class="form-control" id="resultado" readonly>
+        </div>
+      </div>
+    </form>
+  </div>
 
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.input-number {
+    -moz-appearance: textfield;
 }
 </style>
